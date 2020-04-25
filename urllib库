@@ -1,0 +1,50 @@
+1.	import urllib.request
+	html=urllib.request.urlopen(url)   
+	将网页写入本地文件：
+	data=html.read() 读取全部内容，赋值给一个字符串变量  or   data=html.readline() 读取一行   or   data=html.readlines() 读取全部内容，赋给一个列表变量，若读取全部内容，建议用这个
+	with open(file) as name:
+		name.write(data)
+	(file--新建.html格式，'wb'   name--随意取名)  file打开就是一个网页界面
+	or
+	urllib.request.urlretrieve(url,filename=file)
+		此方法会造成一些缓存，可以清除
+	urllib.request.urlcleanup()
+	
+	以下file，等同于上面的html
+	file.info()	 获取当前环境有关信息
+	file.getcode()	获取当前爬取网页的状态码，200为正确，其他为错误
+	file.geturl()  获取当前所爬取的网页
+	
+2.	URL标准中只会允许一部分ASCII字符，其他的比如汉字，是不符合的，所以需要对它们进行编码
+	urllib.request.quote()
+	urllib.request.unquote()  进行解码
+	
+3.	浏览器的模拟
+	import urllib.request
+	url=''
+	headers=('User-Agent','Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3314.0 Safari/537.36 SE 2.X MetaSr 1.0')
+	opener=urllib.request.build_opener()
+	opener.addheaders=[headers]
+	data=opener.open(url).read()
+	    or
+	import urllib.request
+	url=''
+	req=urllib.request.Request(url)
+	req.add_header('User-Agent','Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3314.0 Safari/537.36 SE 2.X MetaSr 1.0')
+	data=urllib.request.urlopen(req).read()
+	
+4.	超时设置
+	urllib.request.urlopen(url,timeout=)   timeout设置时间，秒为单位，超过这个数，会爬取报错
+	ep:
+	import urllib.request
+	for i in range(100):
+		try:
+			data=urllib.request.urlopen(url,timeout=10).read()
+			print(len(data))
+		except Exception as e:
+			print('出现错误:'+str(e))
+
+5.	http协议请求
+	
+		
+	
